@@ -35,6 +35,15 @@ body, .quote-input {
     color:cadetblue;
 }
 
+.wpm {
+    /*this is the wpm*/
+    position: absolute;
+    top: 16rem;
+    font-size: 1.8rem;
+    color:rgb(35, 75, 77);
+}
+
+
 .quote-display {
     /*this is the quote display*/
     margin-bottom: 2rem;
