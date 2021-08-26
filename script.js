@@ -5,6 +5,8 @@ const quoteInputElement = document.getElementById('quoteInput')
 /*this is teh quote input element, got the id from the index.html*/
 const timerElement = document.getElementById('timer')
 
+let characterTyped = 0;
+
 /*we need to set up an evenet listener, to check if what we're typing is correct*/
 quoteInputElement.addEventListener('input', () => {
     /*every single time user types something, a console logs 'changed'*/
@@ -19,6 +21,7 @@ quoteInputElement.addEventListener('input', () => {
 
     /*we want it so when we type everything out correctly, auto new quote*/
     let correct = true
+    characterTyped = 0
 
     arrayQuote.forEach((characterSpan, index) => {
         const character = arrayValue[index]
@@ -33,6 +36,7 @@ quoteInputElement.addEventListener('input', () => {
             add correct class, remove incorrect class*/
             characterSpan.classList.add('correct')
             characterSpan.classList.remove('incorrect')
+            characterTyped++
         } else {
             /*if the character != quote char,
             remove correct class, add incorrect class*/
@@ -88,14 +92,28 @@ async function renderNewQuote() {
 let startTime
 function startTimer() {
     timerElement.innerText = 0
+    currWpm.innerText = 0
+    characterTyped = 0
     /*we want to update our timer every single second
     To do so, we will be getting our current time - the start time*/
     startTime = new Date()
     /*this gets the current time*/
     setInterval(() => {
         timer.innerText = getTimerTime()
+        currWpm.innerText = getWpm()
     }, 1000)
     /*def of setInterval function: every 1000 ms, we're gonna run this function*/
+}
+
+function getWpm() {
+    /* this function gets the wpm of correctly typed words */
+    let wpm = Math.round(((characterTyped / 5) / getTimerTime()) * 60)
+    if ((wpm === undefined) || (getTimerTime() == 0)){
+        return 0
+    }
+    else {
+        return wpm
+    }
 }
 
 function getTimerTime() {
